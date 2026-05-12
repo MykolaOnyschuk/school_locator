@@ -1381,7 +1381,12 @@ function wireUp() {
   });
 
   document.getElementById('sidebar-toggle').addEventListener('click', () => {
-    document.getElementById('sidebar').classList.toggle('collapsed');
+    const sidebar = document.getElementById('sidebar');
+    if (window.innerWidth <= 700) {
+      sidebar.classList.toggle('open');
+    } else {
+      sidebar.classList.toggle('collapsed');
+    }
     setTimeout(() => { if (state.map) state.map.invalidateSize(); }, 300);
   });
 
