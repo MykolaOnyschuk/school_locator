@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Utah Education Atlas — All 41 School Districts</title>
+<title>Edutech - Utah Education Atlas — All 41 School Districts</title>
 <meta name="description" content="An interactive intelligence map of every public school district in Utah. Hover for full contact dossiers." />
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%230a0e14' stroke='%2360a5fa' stroke-width='2'/><path d='M16 6v20M6 16h20' stroke='%2360a5fa' stroke-width='2'/></svg>" />
@@ -140,12 +140,12 @@ a:hover { color: var(--accent-2); text-decoration: underline; }
 .brand-mark { color: var(--accent); flex-shrink: 0; }
 .brand-text { line-height: 1.1; }
 .brand-title { font-weight: 700; font-size: 14px; letter-spacing: 0.14em; color: var(--text); }
-.brand-sub { font-size: 11px; color: var(--text-faint); letter-spacing: 0.1em; margin-top: 2px; text-transform: uppercase; }
+.brand-sub { font-size: 11px; letter-spacing: 0.1em; margin-top: 2px; text-transform: uppercase; }
 
 .topbar-stats { display: flex; gap: 18px; flex: 1; justify-content: center; flex-wrap: wrap; }
 .stat { display: flex; flex-direction: column; align-items: center; min-width: 60px; }
 .stat-num { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 600; color: var(--text); line-height: 1; }
-.stat-lab { font-size: 10px; color: var(--text-faint); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+.stat-lab { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
 
 .topbar-right { display: flex; gap: 8px; }
 .btn-pill {
@@ -186,7 +186,7 @@ a:hover { color: var(--accent-2); text-decoration: underline; }
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--text-faint);
+
   margin-bottom: 10px;
   font-weight: 600;
 }
@@ -654,7 +654,7 @@ a:hover { color: var(--accent-2); text-decoration: underline; }
         <circle cx="16" cy="16" r="3" fill="currentColor"/>
       </svg>
       <div class="brand-text">
-        <div class="brand-title">UTAH EDUCATION ATLAS</div>
+        <div class="brand-title">EDUTECH - UTAH EDUCATION ATLAS</div>
         <div class="brand-sub">41 Public School Districts · 2025–2026</div>
       </div>
     </div>
@@ -1382,7 +1382,7 @@ function wireUp() {
 
   document.getElementById('sidebar-toggle').addEventListener('click', () => {
     document.getElementById('sidebar').classList.toggle('collapsed');
-    setTimeout(() => state.map.invalidateSize(), 300);
+    setTimeout(() => { if (state.map) state.map.invalidateSize(); }, 300);
   });
 
   document.getElementById('drawer-close').addEventListener('click', closeDrawer);
