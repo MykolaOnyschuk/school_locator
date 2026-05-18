@@ -1004,6 +1004,8 @@ const state = {
   cluster: null,
   schoolCluster: null,
   boundaryLayer: null,
+  activeBoundaryId: null,
+  activeBoundaryLayer: null,
   markers: new Map(),
   schoolMarkers: new Map(),
   data: districts,
@@ -1133,16 +1135,34 @@ function loadBoundaries() {
           const id = BOUNDARY_NAME_MAP[feature.properties.NAME];
           const d = state.data.find(x => x.id === id);
           layer.bindTooltip(d ? d.name : feature.properties.NAME, { sticky: true, className: 'boundary-tooltip' });
-          layer.on({
-            mouseover(e) { e.target.setStyle({ fillOpacity: 0.22, weight: 2.5 }); },
-            mouseout(e)  { state.boundaryLayer.resetStyle(e.target); },
-            click() {
+                              layer.on({
+            mouseover(e) { 
+              if (id !== state.activeBoundaryId) {
+                e.target.setStyle({ fillOpacity: 0.22, weight: 2.5 }); 
+              }
+            },
+            mouseout(e)  { 
+              state.boundaryLayer.resetStyle(e.target);
+            },
+            click(e) {
+              if (state.activeBoundaryLayer) {
+                state.activeBoundaryLayer.bindTooltip(state.activeBoundaryLayer._tooltipLabel, { sticky: true, className: 'boundary-tooltip' });
+              }
+              state.activeBoundaryId = id;
+              state.activeBoundaryLayer = layer;
+              layer._tooltipLabel = d ? d.name : feature.properties.NAME;
+              layer.unbindTooltip();
+              state.boundaryLayer.resetStyle(e.target);
               if (d && state.markers.has(d.id)) {
-                state.map.panTo([d.lat, d.lng]);
-                state.markers.get(d.id).openPopup();
+                const marker = state.markers.get(d.id);
+                state.cluster.zoomToShowLayer(marker, () => {
+                  marker.openPopup();
+                });
               }
             }
           });
+
+
         }
       });
       state.boundaryLayer.addTo(state.map);
@@ -1574,7 +1594,6 @@ function wireUp() {
   document.getElementById('btn-overview').addEventListener('click', openModal);
   document.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeModal));
 
-   
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closeDrawer();
