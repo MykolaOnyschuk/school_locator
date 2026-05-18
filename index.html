@@ -894,7 +894,7 @@ a:hover { color: var(--accent-2); text-decoration: underline; }
 
 <script>
 // ============================================================= PASSWORD
-const CORRECT_PASSWORD = 'edutechisthebest!';
+const CORRECT_PASSWORD = 'edutekisthebest!';
 function checkPassword() {
   const input = document.getElementById('passwordInput');
   const error = document.getElementById('passwordError');
@@ -1574,6 +1574,7 @@ function wireUp() {
   document.getElementById('btn-overview').addEventListener('click', openModal);
   document.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeModal));
 
+   
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closeDrawer();
